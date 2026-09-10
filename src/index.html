@@ -1,0 +1,125 @@
+<!doctype html>
+<!--
+  Squelette HTML servi au chargement initial (avant Angular).
+  Contient les meta tags SEO / OpenGraph / Twitter Card et le JSON-LD
+  SportsActivityLocation pour le référencement local Google.
+
+  Les valeurs sont aussi mises à jour dynamiquement par SeoService (voir
+  pages/home/home.ts), mais celles-ci sont indispensables pour les crawlers
+  qui n'exécutent pas de JavaScript et pour le prerender.
+
+  ⚠️ Placeholders TODO à remplacer avant mise en prod :
+    - Numéro de téléphone du club
+    - Email de contact
+    - Adresse complète de la salle
+    - Coordonnées GPS (latitude/longitude)
+-->
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- Couleur de la barre d'adresse mobile (dark theme) -->
+    <meta name="theme-color" content="#0a0a0a" />
+
+    <!-- SEO -->
+    <title>BBD Elzange · Club de boxe pieds-poings, Moselle (57)</title>
+    <meta
+      name="description"
+      content="Body Boxing Defence Elzange. Club de kickboxing, boxe pieds-poings et grappling en Moselle depuis 2009. Cours enfants dès 7 ans, ados, adultes, compétition. Trois soirs par semaine à la salle des sports d'Elzange."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="BBD Elzange" />
+    <link rel="canonical" href="https://www.bbd-elzange.fr/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="BBD Elzange" />
+    <meta property="og:title" content="BBD Elzange · Kickboxing en Moselle" />
+    <meta
+      property="og:description"
+      content="Club de kickboxing et boxe pieds-poings à Elzange. Cours enfants, ados, adultes, compétition."
+    />
+    <meta property="og:url" content="https://www.bbd-elzange.fr/" />
+    <meta property="og:image" content="https://www.bbd-elzange.fr/img/ecusson-club.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BBD Elzange · Kickboxing en Moselle" />
+    <meta name="twitter:description" content="Club de kickboxing et boxe pieds-poings à Elzange. Cours pour tous les âges." />
+    <meta name="twitter:image" content="https://www.bbd-elzange.fr/img/ecusson-club.png" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="/img/ecusson-club.png" />
+
+    <!-- Fonts (preconnect + font-display:swap) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD : SportsActivityLocation
+         TODO: Compléter l'adresse exacte, le téléphone, les coordonnées GPS, le nom légal -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SportsActivityLocation",
+        "name": "Body Boxing Defence Elzange",
+        "alternateName": "BBD Elzange",
+        "description": "Club de kickboxing, boxe pieds-poings et grappling à Elzange (Moselle) depuis 2009. Association loi 1901. Cours enfants dès 7 ans, ados, adultes. Pratique loisir et compétition. Trois soirs par semaine à la salle des sports d'Elzange.",
+        "url": "https://www.bbd-elzange.fr/",
+        "image": "https://www.bbd-elzange.fr/img/ecusson-club.png",
+        "logo": "https://www.bbd-elzange.fr/img/ecusson-club.png",
+        "foundingDate": "2009",
+        "sport": ["Kickboxing", "Boxe pieds-poings", "Grappling"],
+        "telephone": "TODO: numéro de téléphone du club",
+        "email": "TODO: email de contact",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "TODO: adresse complète",
+          "addressLocality": "Elzange",
+          "postalCode": "57970",
+          "addressRegion": "Moselle",
+          "addressCountry": "FR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "TODO: latitude",
+          "longitude": "TODO: longitude"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Monday",
+            "opens": "18:45",
+            "closes": "21:45"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Wednesday",
+            "opens": "17:15",
+            "closes": "21:45"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Friday",
+            "opens": "18:15",
+            "closes": "21:00"
+          }
+        ],
+        "areaServed": [
+          { "@type": "City", "name": "Elzange" },
+          { "@type": "City", "name": "Thionville" },
+          { "@type": "City", "name": "Terville" },
+          { "@type": "AdministrativeArea", "name": "Moselle" }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

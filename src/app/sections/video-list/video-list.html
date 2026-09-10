@@ -1,0 +1,94 @@
+<!-- Si aucune vidéo n'est listée, le composant ne rend rien. -->
+@if (videos.length > 0) {
+  <section
+    id="action"
+    #root
+    class="relative py-24 md:py-32 overflow-hidden"
+    aria-labelledby="action-title"
+  >
+    <div class="container-narrow">
+      <header class="max-w-3xl mb-12">
+        <p data-anim="rise" class="text-xs uppercase tracking-[0.4em] text-[var(--color-secondary)] mb-4">
+          <span class="inline-block w-8 h-px bg-[var(--color-primary)] align-middle mr-2"></span>
+          03 — En action
+        </p>
+        <h2 id="action-title" data-anim="rise"
+            class="font-display tracking-wider text-[clamp(2.25rem,6vw,5rem)] leading-[1]">
+          Nos boxeurs <span class="text-[var(--color-primary)]">à l'œuvre</span>.
+        </h2>
+        <p data-anim="rise" class="mt-6 text-lg text-[var(--color-muted)] max-w-2xl leading-relaxed">
+          Combats, sparring, entraînements techniques. Quelques séquences pour
+          montrer comment on travaille au club, du débutant au compétiteur.
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        <!-- Player principal -->
+        <div data-anim="rise" class="lg:col-span-2">
+          <div class="player" [class.is-vertical]="current()?.vertical">
+            @if (currentEmbedUrl(); as url) {
+              <iframe
+                [src]="url"
+                [title]="current()?.title"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            }
+          </div>
+          @if (current(); as v) {
+            <div class="mt-4">
+              <h3 class="font-display text-2xl tracking-wider">{{ v.title }}</h3>
+              @if (v.description) {
+                <p class="text-[var(--color-muted)] text-sm leading-relaxed mt-2">{{ v.description }}</p>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Playlist -->
+        @if (videos.length > 1) {
+          <aside data-anim="rise" class="lg:col-span-1">
+            <h4 class="font-display text-lg tracking-[0.2em] text-[var(--color-secondary)] uppercase mb-4">
+              Playlist
+            </h4>
+            <ul class="flex flex-col gap-3 max-h-[420px] lg:max-h-[440px] overflow-auto pr-1 thin-scrollbar">
+              @for (video of videos; track video.youtubeId; let i = $index) {
+                <li>
+                  <button
+                    type="button"
+                    class="thumb"
+                    [class.is-active]="i === currentIndex()"
+                    (click)="goTo(i)"
+                    [attr.aria-label]="'Lire : ' + video.title"
+                  >
+                    <span class="thumb-img">
+                      <img
+                        [src]="thumbUrl(video.youtubeId)"
+                        [alt]="''"
+                        loading="lazy"
+                        aria-hidden="true"
+                      />
+                      <span class="thumb-play" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="thumb-text">
+                      <span class="thumb-title">{{ video.title }}</span>
+                      @if (video.description) {
+                        <span class="thumb-desc">{{ video.description }}</span>
+                      }
+                    </span>
+                  </button>
+                </li>
+              }
+            </ul>
+          </aside>
+        }
+      </div>
+    </div>
+  </section>
+}

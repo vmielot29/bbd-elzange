@@ -1,0 +1,40 @@
+/* Tailwind v4 — entrée CSS pure (évite la dépréciation Sass de @import) */
+@import "tailwindcss";
+
+/* =============================================================================
+ * Design tokens — couleurs extraites du logo écusson Body Boxing Defence
+ * Exposés à Tailwind via @theme et accessibles partout en var(--color-*)
+ * ============================================================================= */
+@theme {
+  /* Brand */
+  --color-bg: #0a0a0a;
+  --color-bg-elevated: #141414;
+  --color-bg-2: #1c1c1c;
+  --color-foreground: #f5f5f5;
+  --color-muted: #a1a1a6;
+  --color-muted-foreground: #8a8a90;
+  --color-border: #2a2d31;
+  --color-card: #141414;
+
+  /* Accent rouge logo */
+  --color-primary: #e10600;
+  --color-primary-hover: #b30500;
+  --color-primary-foreground: #ffffff;
+
+  /* Argent métallique écusson */
+  --color-secondary: #c0c2c5;
+  --color-secondary-foreground: #0a0a0a;
+
+  /* Accent doré subtil pour distinction premium */
+  --color-accent: #d4a437;
+  --color-accent-foreground: #0a0a0a;
+
+  /* Typographies */
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-sans: 'Montserrat', 'Inter', system-ui, sans-serif;
+
+  /* Shadows premium */
+  --shadow-glow-red: 0 0 32px -8px rgba(225, 6, 0, 0.45);
+  --shadow-card: 0 4px 24px -8px rgba(0, 0, 0, 0.6), 0 2px 8px -4px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 8px 40px -8px rgba(225, 6, 0, 0.25), 0 4px 16px -4px rgba(0, 0, 0, 0.6);
+}

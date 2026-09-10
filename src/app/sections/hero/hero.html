@@ -1,0 +1,93 @@
+<section
+  id="hero"
+  #root
+  class="relative isolate min-h-[100svh] flex items-center overflow-hidden pt-28 md:pt-32 pb-20"
+  aria-label="Présentation BBD Elzange"
+>
+  <!-- Backdrop : dégradé radial + grille subtile + halo rouge -->
+  <div class="absolute inset-0 -z-10 bg-[var(--color-bg)]" aria-hidden="true">
+    <div class="hero-grid absolute inset-0 opacity-[0.05]"></div>
+    <div class="absolute -top-40 -left-40 w-[36rem] h-[36rem] rounded-full bg-[var(--color-primary)] opacity-[0.10] blur-[120px]"></div>
+    <div class="absolute -bottom-40 -right-32 w-[40rem] h-[40rem] rounded-full bg-[var(--color-primary)] opacity-[0.08] blur-[140px]"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--color-bg)]"></div>
+  </div>
+
+  <div class="container-narrow w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+    <div class="lg:col-span-8">
+      <p
+        data-reveal="meta"
+        class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.4em] text-[var(--color-secondary)] mb-6"
+      >
+        <span class="w-8 h-px bg-[var(--color-primary)]"></span>
+        Body Boxing Defence · Elzange, Moselle
+      </p>
+
+      <h1 class="font-display tracking-wider text-[clamp(2.75rem,8.5vw,7rem)] leading-[0.95]">
+        <span class="reveal-mask block"><span data-reveal="line" class="block">BOXE</span></span>
+        <span class="reveal-mask block"><span data-reveal="line" class="block"><span class="text-[var(--color-primary)]">PIEDS-POINGS</span></span></span>
+        <span class="reveal-mask block"><span data-reveal="line" class="block">À ELZANGE.</span></span>
+      </h1>
+
+      <p
+        data-reveal="sub"
+        class="mt-8 max-w-xl text-base md:text-lg text-[var(--color-muted)] leading-relaxed"
+      >
+        Kickboxing, boxe pieds-poings. Pour les enfants dès 7&nbsp;ans,
+        les ados, les adultes. En loisir ou en compétition, venez vous entraîner
+        et progresser avec nous.
+        <strong>Deux séances d’essai gratuites pour découvrir le club.</strong>
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a data-reveal="cta" href="#club" class="btn-primary">
+          Le club
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </a>
+        <a data-reveal="cta" href="#planning" class="btn-ghost">Planning</a>
+      </div>
+
+      <dl
+        data-reveal="meta"
+        class="mt-14 grid grid-cols-3 gap-6 max-w-xl border-t border-[var(--color-border)] pt-8"
+      >
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Cours / sem.</dt>
+          <dd class="font-display text-3xl text-[var(--color-foreground)] mt-1">7</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">À partir de</dt>
+          <dd class="font-display text-3xl text-[var(--color-foreground)] mt-1">7 ans</dd>
+        </div>
+        <div>
+          <dt class="text-xs uppercase tracking-widest text-[var(--color-muted)]">Depuis</dt>
+          <dd class="font-display text-3xl text-[var(--color-primary)] mt-1">2009</dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- Vidéo d'ambiance — clip MP4 local, autoplay muet en boucle.
+         Source à déposer dans : public/img/hero-clip.mp4 (format vertical 9:16 recommandé)
+         Optionnel : public/img/hero-poster.jpg (image affichée pendant le téléchargement) -->
+    <div class="lg:col-span-4 hidden lg:flex justify-center" data-reveal="meta">
+      <div class="hero-media">
+        <!-- Halo rouge décoratif (conserve l'identité visuelle) -->
+        <div class="hero-media-halo" aria-hidden="true"></div>
+
+        <video
+          class="hero-media-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label="Animation du logo Body Boxing Defence"
+        >
+          <source src="/img/hero-clip.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </div>
+
+</section>

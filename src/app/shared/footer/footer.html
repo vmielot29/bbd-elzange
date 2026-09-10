@@ -1,0 +1,44 @@
+<footer class="border-t border-[var(--color-border)] bg-[var(--color-bg)] mt-24">
+  <div class="container-narrow py-16 grid grid-cols-1 md:grid-cols-3 gap-10 md:items-center">
+    <!-- Colonne logo : l'écusson seul, centré dans sa colonne -->
+    <div class="flex justify-center md:justify-start">
+      <img
+        src="/img/ecusson-shield.png"
+        alt="Écusson Body Boxing Defence Elzange"
+        class="footer-logo"
+        width="120" height="129"
+      />
+    </div>
+
+    <div>
+      <h3 class="font-display text-lg tracking-widest mb-4 text-[var(--color-secondary)]">Naviguer</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a class="hover:text-[var(--color-primary)]" href="#hero">Accueil</a></li>
+        <li><a class="hover:text-[var(--color-primary)]" href="#club">Le Club</a></li>
+        <li><a class="hover:text-[var(--color-primary)]" href="#galerie">Galerie</a></li>
+        <li><a class="hover:text-[var(--color-primary)]" href="#planning">Planning</a></li>
+        <li><a class="hover:text-[var(--color-primary)]" href="#rejoindre">Inscription</a></li>
+        <li><a class="hover:text-[var(--color-primary)]" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="font-display text-lg tracking-widest mb-4 text-[var(--color-secondary)]">Contact</h3>
+      <ul class="space-y-2 text-sm text-[var(--color-muted)]">
+        <li>{{ club.address }}</li>
+        <li>{{ club.phone }}</li>
+        <li>{{ club.email }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-[var(--color-border)]">
+    <div class="container-narrow py-6 flex flex-col md:flex-row gap-2 justify-between text-xs text-[var(--color-muted-foreground)]">
+      <span>© {{ year }} {{ club.name }}, Elzange</span>
+      <span>
+        <!-- TODO: ajouter le lien vers les mentions légales une fois rédigées -->
+        <a href="#" class="hover:text-[var(--color-primary)] transition-colors">Mentions légales</a>
+      </span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO: Mettre à jour l'URL ci-dessous quand le domaine final est connu
+Sitemap: https://www.bbd-elzange.fr/sitemap.xml

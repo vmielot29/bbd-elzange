@@ -1,0 +1,124 @@
+:host { display: block; }
+
+.player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+}
+
+/* Format vertical (YouTube Shorts, vidéos mobile 9:16) :
+   on contraint la largeur à un format raisonnable et on centre. */
+.player.is-vertical {
+  aspect-ratio: 9 / 16;
+  max-width: 380px;
+  margin-inline: auto;
+}
+
+.player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Playlist */
+.thumb {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 0.875rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
+}
+.thumb:hover {
+  border-color: rgba(225, 6, 0, 0.6);
+  transform: translateX(2px);
+}
+.thumb.is-active {
+  border-color: var(--color-primary);
+  background: linear-gradient(90deg, rgba(225, 6, 0, 0.08), transparent 80%);
+}
+.thumb:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.thumb-img {
+  position: relative;
+  display: block;
+  width: 112px;
+  aspect-ratio: 16 / 9;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #000;
+}
+.thumb-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumb-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.35);
+  color: white;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.thumb:hover .thumb-play,
+.thumb.is-active .thumb-play { opacity: 1; }
+.thumb.is-active .thumb-play { background: rgba(225, 6, 0, 0.55); }
+
+.thumb-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.thumb-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground);
+  line-height: 1.2;
+  /* Tronque proprement sur 2 lignes */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.thumb-desc {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.thin-scrollbar::-webkit-scrollbar { width: 6px; }
+.thin-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }

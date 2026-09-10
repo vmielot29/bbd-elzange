@@ -1,0 +1,153 @@
+<section
+  id="galerie"
+  #root
+  class="relative py-24 md:py-32 bg-[var(--color-bg-elevated)] border-y border-[var(--color-border)] overflow-hidden"
+  aria-labelledby="gallery-title"
+>
+  <div class="container-narrow">
+    <header class="max-w-3xl mb-12">
+      <h2 id="gallery-title" data-anim="rise" class="font-display tracking-wider text-[clamp(2.25rem,6vw,5rem)] leading-[1]">
+        <span class="text-[var(--color-primary)]">Photos</span>.
+      </h2>
+      <p data-anim="rise" class="mt-6 text-lg text-[var(--color-muted)] max-w-2xl leading-relaxed">
+        Galas, entraînements, victoires. Quelques images pour donner une idée
+        de l'ambiance.
+      </p>
+    </header>
+
+    <!-- Slider plein écran avec crossfade -->
+    <div
+      data-anim="rise"
+      class="slider"
+      role="region"
+      [attr.aria-roledescription]="'Galerie défilement automatique'"
+      aria-label="Photos du club"
+      [attr.aria-live]="isPaused() ? 'polite' : 'off'"
+      (mouseenter)="pause()"
+      (mouseleave)="resume()"
+      (focusin)="pause()"
+      (focusout)="resume()"
+    >
+      <div class="slider-stage">
+        @for (img of images; track img.src; let i = $index) {
+          <figure
+            class="slide"
+            [class.is-active]="i === currentIndex()"
+            [attr.aria-hidden]="i !== currentIndex()"
+          >
+            <img
+              [src]="img.src"
+              [alt]="img.alt"
+              [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+              [attr.fetchpriority]="i === 0 ? 'high' : 'auto'"
+              decoding="async"
+            />
+            <figcaption class="slide-caption">{{ img.alt }}</figcaption>
+          </figure>
+        }
+
+        <!-- Boutons précédent / suivant -->
+        @if (images.length > 1) {
+          <button
+            type="button"
+            class="slider-nav prev"
+            (click)="prev()"
+            aria-label="Photo précédente"
+          >
+            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="slider-nav next"
+            (click)="next()"
+            aria-label="Photo suivante"
+          >
+            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/>
+            </svg>
+          </button>
+
+          <!-- Loupe pour ouvrir la lightbox -->
+          <button
+            type="button"
+            class="slider-zoom"
+            (click)="openLightbox()"
+            [attr.aria-label]="'Agrandir : ' + current().alt"
+          >
+            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="7"/>
+              <path stroke-linecap="round" d="M11 8v6M8 11h6M20 20l-3.5-3.5"/>
+            </svg>
+          </button>
+
+          <!-- Indicateur d'avancement -->
+          <div class="slider-progress" aria-hidden="true">
+            <span class="slider-progress-bar" [class.is-running]="!isPaused() && !lightboxOpen()" [style.--delay]="delaySeconds + 's'"></span>
+          </div>
+        }
+      </div>
+
+      <!-- Dots de navigation -->
+      @if (images.length > 1) {
+        <div class="slider-dots" role="tablist" aria-label="Choisir une photo">
+          @for (img of images; track img.src; let i = $index) {
+            <button
+              type="button"
+              class="slider-dot"
+              [class.is-active]="i === currentIndex()"
+              role="tab"
+              [attr.aria-selected]="i === currentIndex()"
+              [attr.aria-label]="'Photo ' + (i + 1) + ' sur ' + images.length"
+              (click)="goTo(i)"
+            ></button>
+          }
+        </div>
+      }
+    </div>
+
+    <p class="text-xs text-[var(--color-muted-foreground)] mt-6 text-center">
+      <!-- Pour ajouter ou retirer une photo : édite la liste GALLERY dans
+           src/app/core/club.data.ts et dépose les fichiers dans public/img/.
+           Pour modifier la vitesse de défilement : constante AUTOPLAY_DELAY_MS dans gallery.ts. -->
+    </p>
+  </div>
+
+  <!-- Lightbox -->
+  @if (lightboxOpen()) {
+    <div
+      class="lightbox"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="'Photo : ' + current().alt"
+      (click)="closeLightbox()"
+    >
+      <button class="lightbox-close" type="button" (click)="closeLightbox()" aria-label="Fermer">
+        <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" d="M6 6l12 12M6 18L18 6"/>
+        </svg>
+      </button>
+
+      <button class="lightbox-nav prev" type="button" (click)="prev(); $event.stopPropagation()" aria-label="Photo précédente">
+        <svg viewBox="0 0 24 24" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+
+      <figure class="lightbox-figure" (click)="$event.stopPropagation()">
+        <img
+          [src]="current().full || current().src"
+          [alt]="current().alt"
+        />
+        <figcaption>{{ current().alt }}</figcaption>
+      </figure>
+
+      <button class="lightbox-nav next" type="button" (click)="next(); $event.stopPropagation()" aria-label="Photo suivante">
+        <svg viewBox="0 0 24 24" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/>
+        </svg>
+      </button>
+    </div>
+  }
+</section>

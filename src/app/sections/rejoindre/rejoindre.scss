@@ -1,0 +1,113 @@
+:host { display: block; }
+
+.profile-card {
+  transition: border-color 250ms ease, transform 250ms ease, box-shadow 250ms ease;
+  box-shadow: var(--shadow-card);
+}
+.profile-card:hover {
+  border-color: rgba(225, 6, 0, 0.4);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* ─────────────────────────────────────────────
+   Item document
+   ───────────────────────────────────────────── */
+.doc-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: border-color 200ms ease, background 200ms ease;
+}
+.doc-item:hover {
+  border-color: rgba(225, 6, 0, 0.3);
+  background: rgba(225, 6, 0, 0.03);
+}
+
+@media (min-width: 640px) {
+  .doc-item {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+.doc-header {
+  display: flex;
+  gap: 0.875rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.doc-index {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  letter-spacing: 0;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* ─────────────────────────────────────────────
+   Badge "À vérifier" (documents à mettre à jour pour la nouvelle saison)
+   ───────────────────────────────────────────── */
+.doc-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.doc-badge--warn {
+  border: 1px solid rgba(212, 164, 55, 0.5);
+  color: #e4b757;
+  background: rgba(212, 164, 55, 0.08);
+  cursor: help;
+}
+
+/* ─────────────────────────────────────────────
+   Bouton téléchargement
+   ───────────────────────────────────────────── */
+.doc-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  min-height: 40px;
+  background: transparent;
+  color: var(--color-foreground);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+.doc-download:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(225, 6, 0, 0.05);
+}
+.doc-download:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}

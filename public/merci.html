@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="robots" content="noindex" />
+    <title>Message bien reçu — BBD Elzange</title>
+    <link rel="icon" type="image/png" href="/img/ecusson-club.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0a0a;
+        --fg: #f5f5f5;
+        --muted: #a1a1a6;
+        --primary: #e10600;
+        --border: #2a2d31;
+        --card: #141414;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100svh;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: 'Montserrat', system-ui, sans-serif;
+        display: grid;
+        place-items: center;
+        padding: 2rem 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+      body::before, body::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.12;
+        background: var(--primary);
+        z-index: 0;
+      }
+      body::before { width: 36rem; height: 36rem; top: -10rem; left: -10rem; }
+      body::after  { width: 40rem; height: 40rem; bottom: -10rem; right: -8rem; opacity: 0.08; }
+
+      .card {
+        position: relative;
+        z-index: 1;
+        max-width: 560px;
+        width: 100%;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 3rem 2rem;
+        text-align: center;
+        box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7);
+      }
+      .logo {
+        width: 80px; height: auto;
+        margin-bottom: 1.5rem;
+        filter: drop-shadow(0 0 12px rgba(225,6,0,0.35));
+      }
+      .check {
+        width: 56px; height: 56px;
+        margin: 0 auto 1.5rem;
+        display: grid; place-items: center;
+        border-radius: 50%;
+        background: rgba(225, 6, 0, 0.12);
+        border: 1px solid rgba(225, 6, 0, 0.4);
+      }
+      h1 {
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: clamp(2rem, 6vw, 3rem);
+        letter-spacing: 0.02em;
+        line-height: 1;
+        margin: 0 0 1rem;
+      }
+      .accent { color: var(--primary); }
+      p {
+        color: var(--muted);
+        line-height: 1.6;
+        margin: 0 0 1.5rem;
+      }
+      .btn {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        background: var(--primary);
+        color: white;
+        font-family: 'Bebas Neue', Impact, sans-serif;
+        font-size: 1.125rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        border: none; border-radius: 4px;
+        text-decoration: none;
+        transition: transform 200ms ease, background 200ms ease;
+        box-shadow: 0 0 32px -8px rgba(225, 6, 0, 0.45);
+      }
+      .btn:hover { background: #b30500; transform: translateY(-2px); }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <img class="logo" src="/img/ecusson-club.png" alt="BBD Elzange" width="80" height="80" />
+      <div class="check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#e10600" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7"/>
+        </svg>
+      </div>
+      <h1>Message <span class="accent">bien reçu&nbsp;!</span></h1>
+      <p>
+        Merci d'avoir pris le temps de nous écrire. On revient vers vous au
+        plus vite — généralement sous 48&nbsp;h, parfois plus vite quand les
+        coachs sont à la salle.
+      </p>
+      <a href="/" class="btn">
+        Retour à l'accueil
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </a>
+    </div>
+  </body>
+</html>

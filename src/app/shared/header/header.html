@@ -1,0 +1,68 @@
+<header
+  class="fixed top-0 inset-x-0 z-50 transition-all duration-300"
+  [class.is-scrolled]="scrolled()"
+>
+  <div class="container-narrow flex items-center justify-between md:justify-end md:gap-8 lg:gap-12 h-16 md:h-20">
+    <a href="#hero" class="flex items-center group" aria-label="Body Boxing Defence Elzange — Accueil">
+      <img
+        src="/img/ecusson-club.png"
+        alt="Logo Body Boxing Defence Elzange"
+        class="header-logo w-auto drop-shadow-[0_0_8px_rgba(225,6,0,0.3)] transition-transform duration-300 group-hover:scale-105"
+        width="40" height="40"
+      />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-2" aria-label="Navigation principale">
+      @for (link of links; track link.href) {
+        <a
+          [href]="link.href"
+          class="px-4 py-2 text-sm uppercase tracking-widest font-medium text-[var(--color-foreground)]/85 hover:text-[var(--color-primary)] transition-colors"
+        >{{ link.label }}</a>
+      }
+      <a href="#contact" class="btn-primary !py-2.5 !px-5 !text-sm !font-sans !font-medium !tracking-widest ml-2">Contact</a>
+    </nav>
+
+    <!-- Burger mobile -->
+    <button
+      type="button"
+      class="md:hidden p-2 -mr-2 text-[var(--color-foreground)]"
+      (click)="toggleMobile()"
+      [attr.aria-expanded]="mobileOpen()"
+      aria-label="Ouvrir le menu"
+    >
+      @if (mobileOpen()) {
+        <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" d="M6 6l12 12M6 18L18 6"/>
+        </svg>
+      } @else {
+        <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      }
+    </button>
+  </div>
+
+  <!-- Mobile drawer -->
+  @if (mobileOpen()) {
+    <nav
+      class="md:hidden border-t border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur-lg"
+      aria-label="Navigation mobile"
+    >
+      <ul class="container-narrow py-4 flex flex-col gap-1">
+        @for (link of links; track link.href) {
+          <li>
+            <a
+              [href]="link.href"
+              (click)="closeMobile()"
+              class="block py-3 px-2 text-base uppercase tracking-widest font-medium border-b border-[var(--color-border)]/60"
+            >{{ link.label }}</a>
+          </li>
+        }
+        <li class="mt-4">
+          <a href="#contact" (click)="closeMobile()" class="btn-primary w-full !font-sans !font-medium !tracking-widest">Contact</a>
+        </li>
+      </ul>
+    </nav>
+  }
+</header>

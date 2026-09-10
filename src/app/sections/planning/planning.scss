@@ -1,0 +1,35 @@
+:host { display: block; }
+
+.planning-card {
+  --mdc-outlined-card-container-color: var(--color-card);
+  --mdc-outlined-card-outline-color: var(--color-border);
+  --mdc-outlined-card-container-shape: 8px;
+  color: var(--color-foreground);
+  transition: border-color 250ms ease, transform 250ms ease, box-shadow 250ms ease;
+}
+.planning-card:hover {
+  --mdc-outlined-card-outline-color: rgba(225, 6, 0, 0.6);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.slot {
+  position: relative;
+  padding: 0.875rem 1rem 0.875rem 1.25rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+}
+.slot::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.875rem; bottom: 0.875rem;
+  width: 3px;
+  background: var(--color-primary);
+  border-radius: 2px;
+}
+
+.level-eveil::before        { background: #d4a437; }
+.level-jeune::before        { background: #5ba3e0; }
+.level-adulte::before       { background: var(--color-primary); }
+.level-competition::before  { background: linear-gradient(180deg, #e10600, #ffba00); }

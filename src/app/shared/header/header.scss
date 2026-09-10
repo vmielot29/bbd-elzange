@@ -1,0 +1,27 @@
+:host {
+  display: contents;
+}
+
+header {
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.85) 0%, rgba(10, 10, 10, 0.0) 100%);
+  backdrop-filter: blur(0);
+  transition: background 300ms ease, backdrop-filter 300ms ease, border-color 300ms ease;
+  border-bottom: 1px solid transparent;
+
+  &.is-scrolled {
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(16px) saturate(140%);
+    border-bottom-color: var(--color-border);
+  }
+}
+
+/* Logo dans le header — sans texte associé, on lui donne un peu plus de
+   présence pour qu'il ne paraisse pas perdu à gauche de la barre. */
+.header-logo {
+  height: 40px;
+  width: auto;
+  flex-shrink: 0;
+}
+@media (min-width: 768px) {
+  .header-logo { height: 48px; }
+}

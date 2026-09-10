@@ -1,0 +1,72 @@
+<section
+  id="planning"
+  #root
+  class="relative py-24 md:py-32 bg-[var(--color-bg)]"
+  aria-labelledby="planning-title"
+>
+  <div class="container-narrow">
+    <header class="max-w-3xl mb-14">
+      <h2 id="planning-title" data-anim="rise"
+          class="font-display tracking-wider text-[clamp(2.25rem,6vw,5rem)] leading-[1]">
+        <span class="text-[var(--color-primary)]">Planning</span>.
+      </h2>
+      <p data-anim="rise" class="mt-6 text-lg text-[var(--color-muted)] max-w-2xl leading-relaxed">
+        Trois soirs par semaine à la salle des sports d'Elzange. Sept créneaux
+        du plus petit au compétiteur. Après chaque séance, possibilité de
+        faire quelques rounds de grappling pour ceux qui restent.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+      @for (group of groups(); track group.day) {
+        <mat-card
+          appearance="outlined"
+          data-anim="rise"
+          class="planning-card"
+        >
+          <mat-card-header class="!pb-2">
+            <mat-card-title class="!font-display !text-3xl !tracking-wider">
+              {{ group.day }}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="flex flex-col gap-4 pt-2">
+            @for (slot of group.slots; track slot.start + slot.name) {
+              <div class="slot" [class]="levelClass(slot.level)">
+                <div class="flex items-baseline justify-between gap-3">
+                  <h3 class="font-display text-xl tracking-wider">{{ slot.name }}</h3>
+                  <span class="font-mono text-sm text-[var(--color-foreground)] whitespace-nowrap">
+                    {{ slot.start }} – {{ slot.end }}
+                  </span>
+                </div>
+                <p class="text-xs uppercase tracking-[0.25em] text-[var(--color-muted)] mt-1">
+                  {{ slot.audience }}
+                </p>
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <!-- Bandeau ambiance — invitation chaleureuse, pas de pression -->
+    <aside
+      data-anim="rise"
+      class="mt-10 p-6 md:p-8 rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] flex flex-col md:flex-row items-start md:items-center gap-6 justify-between"
+    >
+      <div>
+        <h3 class="font-display text-2xl tracking-wider mb-2">Envie de voir un cours&nbsp;?</h3>
+        <p class="text-[var(--color-muted)] text-sm leading-relaxed max-w-xl">
+          Passe au club un soir d'entraînement. Aucun engagement, juste pour
+          te faire une idée. On te présente les coachs, tu observes, tu poses
+          tes questions.
+        </p>
+      </div>
+      <a href="#contact" class="btn-ghost whitespace-nowrap">
+        Nous contacter
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </a>
+    </aside>
+  </div>
+</section>

@@ -1,0 +1,96 @@
+<section
+  id="rejoindre"
+  #root
+  class="relative py-24 md:py-32 bg-[var(--color-bg-elevated)] border-y border-[var(--color-border)] overflow-hidden"
+  aria-labelledby="rejoindre-title"
+>
+  <div class="container-narrow">
+    <header class="max-w-3xl mb-12">
+      <h2 id="rejoindre-title" data-anim="rise" class="font-display tracking-wider text-[clamp(2.25rem,6vw,5rem)] leading-[1]">
+        <span class="text-[var(--color-primary)]">S'inscrire</span>.
+      </h2>
+      <p data-anim="rise" class="mt-6 text-lg text-[var(--color-muted)] max-w-2xl leading-relaxed">
+        Voici les documents à ramener pour la saison. Choisis ton profil,
+        imprime, remplis. Si tu as un doute, passe nous voir avant.
+      </p>
+      <p data-anim="rise" class="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-[var(--color-accent)] font-medium">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="9"/>
+          <path stroke-linecap="round" d="M12 8v4l3 2"/>
+        </svg>
+        Saison {{ season }}
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+      @for (profile of profiles; track profile.title) {
+        <article data-anim="rise" class="profile-card p-6 md:p-8 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]">
+          <header class="mb-6 pb-6 border-b border-[var(--color-border)]">
+            <div class="flex items-baseline justify-between gap-3 mb-2">
+              <h3 class="font-display text-3xl md:text-4xl tracking-wider">{{ profile.title }}</h3>
+              <span class="text-xs uppercase tracking-[0.25em] text-[var(--color-muted)] whitespace-nowrap">{{ profile.audience }}</span>
+            </div>
+            <p class="text-sm text-[var(--color-muted)] leading-relaxed" [innerHTML]="profile.intro"></p>
+          </header>
+
+          <ul class="space-y-4">
+            @for (doc of profile.docs; track doc.file; let i = $index) {
+              <li class="doc-item">
+                <div class="doc-header">
+                  <span class="doc-index font-display text-xs">{{ i + 1 }}</span>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex flex-wrap items-baseline gap-2">
+                      <h4 class="font-display text-base md:text-lg tracking-wider">{{ doc.name }}</h4>
+                      @if (doc.outdated) {
+                        <span class="doc-badge doc-badge--warn" title="Ce document est daté d'une saison antérieure — le bureau du club en fournira une version à jour.">
+                          À vérifier
+                        </span>
+                      }
+                    </div>
+                    <p class="text-sm text-[var(--color-muted)] leading-relaxed mt-1">{{ doc.purpose }}</p>
+                    @if (doc.hint) {
+                      <p class="text-xs text-[var(--color-muted-foreground)] leading-relaxed mt-2 italic">
+                        {{ doc.hint }}
+                      </p>
+                    }
+                  </div>
+                </div>
+                <a
+                  [href]="doc.file"
+                  download
+                  class="doc-download"
+                  [attr.aria-label]="'Télécharger : ' + doc.name"
+                >
+                  <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/>
+                  </svg>
+                  Télécharger
+                </a>
+              </li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+
+    <!-- Bandeau info : besoin d'aide ? -->
+    <aside
+      data-anim="rise"
+      class="mt-10 p-6 md:p-8 rounded-lg border border-[var(--color-border)] bg-gradient-to-r from-[var(--color-primary)]/5 to-transparent flex flex-col md:flex-row items-start md:items-center gap-6 justify-between"
+    >
+      <div>
+        <h3 class="font-display text-2xl tracking-wider mb-2">Un doute sur un document&nbsp;?</h3>
+        <p class="text-[var(--color-muted)] text-sm leading-relaxed max-w-xl">
+          Passe au club un soir d'entraînement, on remplit avec toi. Ou
+          envoie-nous un message, on répond rapidement.
+        </p>
+      </div>
+      <a href="#contact" class="btn-ghost whitespace-nowrap">
+        Nous contacter
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </a>
+    </aside>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  TODO: Adapter <loc> au domaine définitif et mettre à jour <lastmod> à chaque déploiement.
+  Si tu ajoutes des pages (mentions-legales, blog, etc.), liste-les ici.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.bbd-elzange.fr/</loc>
+    <lastmod>2026-05-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
