@@ -15,7 +15,7 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./pages/home/home'),
-    title: "BBD Elzange — Club de Kickboxing & Boxe Pieds-Poings | Cours d'essai gratuit",
+    title: "BBD Elzange - Club de Boxe Pieds-Poings",
   },
   // Catch-all : toute URL inconnue renvoie sur la home.
   // En prod, Nginx applique aussi try_files → index.html pour la même raison.
