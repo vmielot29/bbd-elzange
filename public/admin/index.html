@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--
+      `noindex` : cette page ne doit JAMAIS remonter dans Google. Elle n'est pas
+      secrète (le code est public), mais elle n'a rien à faire dans les résultats
+      de recherche du club. La vraie protection est côté GitHub : sans compte
+      collaborateur sur le repo, on ne peut rien enregistrer.
+    -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <title>BBD Elzange — Administration du site</title>
+    <link rel="icon" href="/img/ecusson-club.png" />
+  </head>
+
+  <body>
+    <!--
+      Sveltia CMS — toute l'interface (HTML, CSS, JS) est contenue dans ce seul
+      fichier servi par le CDN unpkg. Aucune feuille de style à charger : les
+      styles sont embarqués dans le JS.
+
+      ATTENTION : ne pas ajouter `type="module"` sur ce script, le CMS ne se
+      lancerait pas (contrainte documentée par Sveltia).
+
+      La configuration (quoi est éditable, où ça s'enregistre) est dans le
+      fichier `config.yml` à côté de celui-ci — c'est LUI qu'il faut modifier
+      pour changer le comportement du CMS, jamais ce fichier-ci.
+    -->
+    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+  </body>
+</html>

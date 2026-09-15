@@ -15,6 +15,7 @@ kickboxing / boxe pieds-poings / grappling, actif depuis 2009.
 | **Angular Material 21** | Cards, form fields, buttons (thème sombre custom basé sur la palette du logo) |
 | **GSAP + ScrollTrigger** | Animations d'apparition (text reveal, fade-up, parallaxe) |
 | **FormSubmit** | Formulaire de contact sans backend, gratuit, illimité |
+| **Sveltia CMS** | Interface `/admin` pour que le club mette à jour photos et PDFs sans code — voir [README-CMS.md](README-CMS.md) |
 
 **Aucun backend requis en production.** Le site est déployable sur n'importe
 quel serveur statique (Vercel, Netlify, VM Nginx, S3...).
@@ -24,6 +25,15 @@ quel serveur statique (Vercel, Netlify, VM Nginx, S3...).
 ## 📁 Structure du projet
 
 ```
+content/                    ← 📝 contenus éditables par le club via /admin
+├── gallery.json            ← photos de la galerie (ordre + légendes)
+├── coachs.json             ← équipe + leurs photos
+└── registration.json       ← fiches d'inscription (PDFs)
+
+public/admin/               ← interface d'administration (Sveltia CMS)
+├── index.html
+└── config.yml              ← définit ce qui est éditable — voir README-CMS.md
+
 src/
 ├── index.html              ← squelette HTML + meta SEO + JSON-LD
 ├── styles.scss             ← thème Material + styles globaux (btn, containers)
@@ -39,7 +49,8 @@ src/
     ├── app.routes.server.ts ← config prerender
     │
     ├── core/
-    │   ├── club.data.ts    ← 🔑 SOURCE DE VÉRITÉ (planning, coachs, docs, etc.)
+    │   ├── club.data.ts    ← 🔑 SOURCE DE VÉRITÉ (planning, infos club…)
+    │   │                      + lit content/*.json pour les contenus CMS
     │   ├── gsap.service.ts ← wrapper GSAP (lazy-load + reduced-motion + cleanup)
     │   └── seo.service.ts  ← MAJ dynamique meta/title/OG/Twitter
     │
@@ -64,11 +75,12 @@ src/
 
 | Ce que tu veux changer | Où |
 |---|---|
+| 🖼️ **Photos galerie** | **Interface web `/admin`** (ou `content/gallery.json`) |
+| 👥 **Photos des coachs** | **Interface web `/admin`** (ou `content/coachs.json`) |
+| 📄 **Documents d'inscription** | **Interface web `/admin`** (ou `content/registration.json`) |
 | **Planning des cours** | `src/app/core/club.data.ts` → `PLANNING` |
-| **Équipe / coachs / bureau** | `src/app/core/club.data.ts` → `COACHS` |
+| **Noms / rôles des coachs** | `content/coachs.json` (non modifiable via `/admin`) |
 | **Valeurs du club** | `src/app/core/club.data.ts` → `PHILOSOPHY` |
-| **Documents d'inscription** | `public/docs/` (PDFs) + `src/app/core/club.data.ts` → `REGISTRATION` |
-| **Photos galerie** | `public/img/` + `src/app/core/club.data.ts` → `GALLERY` |
 | **Adresse / tél / email** | `src/app/core/club.data.ts` → `CLUB_INFO` |
 | **Saison affichée dans "S'inscrire"** | `src/app/core/club.data.ts` → `CURRENT_SEASON` |
 | **Email de réception des messages** | `src/app/core/club.data.ts` → `CLUB_INFO.formSubmitEmail` |

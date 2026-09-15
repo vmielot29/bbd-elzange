@@ -10,6 +10,11 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "isolatedModules": true,
+
+    // Permet d'importer directement les fichiers JSON de `content/` (édités
+    // par le CMS) depuis le TypeScript. Sans cette option, club.data.ts ne
+    // compile pas.
+    "resolveJsonModule": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",

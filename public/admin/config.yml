@@ -1,0 +1,329 @@
+# ═══════════════════════════════════════════════════════════════════════════
+#  CONFIGURATION SVELTIA CMS — BBD Elzange
+# ═══════════════════════════════════════════════════════════════════════════
+#
+#  Ce fichier décrit CE QUE le président peut modifier depuis /admin, et OÙ
+#  chaque modification est enregistrée dans le repo GitHub.
+#
+#  Principe de fonctionnement :
+#    1. Le président se connecte sur https://www.bbd-elzange.fr/admin
+#    2. Il modifie une photo / une légende / un PDF
+#    3. Sveltia écrit directement un commit sur la branche `main` du repo
+#    4. Vercel détecte le push et rebuild le site (~1 minute)
+#
+#  Il n'y a AUCUNE base de données : le repo Git est la base de données.
+#
+#  Portée volontairement restreinte : seules la galerie, les photos des coachs
+#  et les PDF d'inscription sont éditables. Tout le reste (planning, textes,
+#  coordonnées, valeurs du club) reste en dur dans le code — voir
+#  `src/app/core/club.data.ts`. Les champs affichés en lecture seule ci-dessous
+#  sont là pour le contexte visuel, pas pour être modifiés.
+#
+#  Doc officielle : https://sveltiacms.app/en/docs
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Active l'autocomplétion + la validation de ce fichier dans VS Code.
+$schema: https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+# ───────────────────────────────────────────────────────────────────────────
+#  BACKEND — où sont stockées les données
+# ───────────────────────────────────────────────────────────────────────────
+backend:
+  name: github
+  repo: vmielot29/bbd-elzange
+  branch: main
+
+  # URL du relais OAuth (Worker Cloudflare `sveltia-cms-auth`).
+  #
+  # Pas de slash final, et surtout PAS de `/callback` ici : Sveltia l'ajoute
+  # lui-même. Le `/callback` ne va que dans l'OAuth App côté GitHub.
+  #
+  # Ce relais existe uniquement pour garder le *client secret* GitHub côté
+  # serveur. Rien de sensible n'est exposé dans le navigateur.
+  base_url: https://sveltia-cms-auth.bbd-elzange.workers.dev
+
+  # N'autorise que la connexion "Se connecter avec GitHub".
+  # Sans ça, Sveltia affiche aussi un bouton "Sign in with token" qui demande
+  # de générer un jeton à la main — inutilisable pour un non-technicien.
+  auth_methods:
+    - oauth
+
+  # Messages de commit lisibles dans l'historique GitHub, pour qu'on sache
+  # toujours qui a changé quoi et quand.
+  commit_messages:
+    update: "Site : mise à jour de {{collection}} (via /admin)"
+    uploadMedia: "Site : ajout du fichier {{path}} (via /admin)"
+    deleteMedia: "Site : suppression du fichier {{path}} (via /admin)"
+
+# ───────────────────────────────────────────────────────────────────────────
+#  IDENTITÉ DE L'INTERFACE
+# ───────────────────────────────────────────────────────────────────────────
+app_title: BBD Elzange — Administration
+logo_url: /img/ecusson-club.png
+
+# Adresse publique du site. Sert uniquement aux liens "voir le site" affichés
+# dans l'interface du CMS — aucun impact sur l'enregistrement des contenus.
+#
+# Actuellement sur l'URL Vercel, le nom de domaine n'étant pas encore branché.
+# Le jour où bbd-elzange.fr sera actif, remplacer les deux lignes ci-dessous.
+#
+# Attention : le domaine doit AUSSI figurer dans le secret ALLOWED_DOMAINS du
+# worker Cloudflare, sinon la connexion est refusée avec UNSUPPORTED_DOMAIN.
+# C'est le seul endroit où le domaine est réellement bloquant.
+# Voir README-CMS.md, "Changer de domaine".
+site_url: https://bbd-elzange.vercel.app
+display_url: https://bbd-elzange.vercel.app
+
+# ───────────────────────────────────────────────────────────────────────────
+#  MÉDIAS — valeurs par défaut
+# ───────────────────────────────────────────────────────────────────────────
+#  `media_folder`  = où le fichier est écrit DANS LE REPO
+#  `public_folder` = le chemin tel qu'il apparaîtra dans le HTML du site
+#
+#  Le décalage entre les deux vient d'Angular : tout ce qui est dans `public/`
+#  est copié à la racine du site au build. Donc `public/img/x.jpg` est servi
+#  sur `/img/x.jpg`.
+#
+#  Ces valeurs globales sont surchargées champ par champ plus bas, pour ranger
+#  chaque type de fichier au bon endroit.
+# ───────────────────────────────────────────────────────────────────────────
+media_folder: public/img
+public_folder: /img
+
+collections:
+  # ═════════════════════════════════════════════════════════════════════════
+  #  1. GALERIE PHOTOS  ->  content/gallery.json
+  # ═════════════════════════════════════════════════════════════════════════
+  #  Lu par `GALLERY` dans club.data.ts, affiché par la section "Photos".
+  #  Ajout, suppression, réordonnancement et légende : tout est ouvert ici.
+  # ═════════════════════════════════════════════════════════════════════════
+  - name: galerie
+    label: Galerie photos
+    icon: photo_library
+    files:
+      - name: gallery
+        label: Photos du club
+        file: content/gallery.json
+
+        # OBLIGATOIRE. Par défaut Sveltia écrit du `yaml-frontmatter` ; sans
+        # cette ligne il écrirait du YAML dans un fichier .json et le build
+        # Angular casserait.
+        format: json
+
+        fields:
+          - name: images
+            label: Photos
+            label_singular: Photo
+            widget: list
+            allow_add: true
+            allow_remove: true
+            allow_reorder: true
+            allow_duplicate: false
+            # Aperçu de chaque ligne dans la liste : la vignette + la légende,
+            # pour reconnaître une photo sans avoir à déplier la fiche.
+            thumbnail: src
+            summary: "{{fields.alt}}"
+            collapsed: true
+            hint: >-
+              Glisse-dépose les photos pour changer leur ordre d'affichage dans
+              le diaporama. La première de la liste s'affiche en premier.
+            fields:
+              - name: src
+                label: Image
+                widget: image
+                required: true
+                accept: image/jpeg,image/png,image/webp
+                media_folder: /public/img
+                public_folder: /img
+                hint: >-
+                  Format paysage de préférence. Une photo de 1600 px de large
+                  suffit largement — inutile d'envoyer un fichier de 8 Mo sorti
+                  de l'appareil photo, le site serait plus lent à charger.
+
+              - name: alt
+                label: Légende
+                widget: string
+                required: true
+                hint: >-
+                  Décris ce qu'on voit sur la photo, en une phrase. Ce texte
+                  s'affiche sous l'image ET il est lu par les personnes
+                  malvoyantes et par Google. Exemple : Groupe du club au gala
+                  de Terville.
+
+  # ═════════════════════════════════════════════════════════════════════════
+  #  2. PHOTOS DES COACHS  ->  content/coachs.json
+  # ═════════════════════════════════════════════════════════════════════════
+  #  Lu par `COACHS` dans club.data.ts, affiché par la section "Le club".
+  #
+  #  Portée volontairement réduite à la PHOTO : les noms, rôles et fonctions au
+  #  bureau restent en lecture seule pour éviter toute casse accidentelle de la
+  #  section équipe. Pour modifier ces textes, passer par le code.
+  #
+  #  Pour ouvrir l'édition complète un jour : passer les `readonly: true` à
+  #  `false` et les `allow_add`/`allow_remove` à `true`.
+  # ═════════════════════════════════════════════════════════════════════════
+  - name: coachs
+    label: Photos des coachs
+    icon: groups
+    files:
+      - name: coachs
+        label: Équipe du club
+        file: content/coachs.json
+        format: json
+        fields:
+          - name: coachs
+            label: Coachs
+            label_singular: Coach
+            widget: list
+            allow_add: false
+            allow_remove: false
+            allow_reorder: false
+            allow_duplicate: false
+            thumbnail: photo
+            summary: "{{fields.name}} — {{fields.role}}"
+            collapsed: true
+            hint: >-
+              Clique sur une personne pour ajouter ou remplacer sa photo. Les
+              noms et les rôles ne sont pas modifiables ici.
+            fields:
+              # ─── Le seul champ réellement modifiable ───
+              - name: photo
+                label: Photo
+                widget: image
+                required: false
+                accept: image/jpeg,image/png,image/webp
+                media_folder: /public/img/coachs
+                public_folder: /img/coachs
+                hint: >-
+                  Photo de portrait, cadrée sur le visage. Elle sera affichée
+                  en rond, donc centre bien la tête. Si tu laisses vide, le
+                  site affiche les initiales sur fond dégradé (c'est prévu, ce
+                  n'est pas un bug).
+
+              # ─── Contexte, non modifiable (readonly) ───
+              - name: name
+                label: Nom
+                widget: string
+                readonly: true
+              - name: role
+                label: Rôle au coaching
+                widget: string
+                readonly: true
+              - name: bureauRole
+                label: Rôle au bureau
+                widget: string
+                readonly: true
+                required: false
+              - name: initials
+                label: Initiales (affichées si pas de photo)
+                widget: string
+                readonly: true
+              - name: isPresident
+                label: Président du club
+                widget: boolean
+                readonly: true
+                required: false
+
+  # ═════════════════════════════════════════════════════════════════════════
+  #  3. FICHES D'INSCRIPTION (PDF)  ->  content/registration.json
+  # ═════════════════════════════════════════════════════════════════════════
+  #  Lu par `REGISTRATION` dans club.data.ts, affiché par la section
+  #  "S'inscrire".
+  #
+  #  Portée : REMPLACEMENT des PDF uniquement. Les intitulés, explications et
+  #  la composition des deux dossiers (Adulte / Enfant & Ado) sont en lecture
+  #  seule — ce sont des textes rédigés, pas des données à manipuler.
+  #
+  #  Seule exception ouverte : la case "document à vérifier", qui pilote le
+  #  badge orange affiché sur le site. C'est une info que seul le bureau
+  #  connaît, donc elle a sa place ici.
+  # ═════════════════════════════════════════════════════════════════════════
+  - name: inscriptions
+    label: Fiches d'inscription
+    icon: description
+    files:
+      - name: registration
+        label: Documents à télécharger
+        file: content/registration.json
+        format: json
+        fields:
+          - name: profiles
+            label: Dossiers
+            label_singular: Dossier
+            widget: list
+            allow_add: false
+            allow_remove: false
+            allow_reorder: false
+            allow_duplicate: false
+            summary: "{{fields.title}} ({{fields.audience}})"
+            collapsed: true
+            hint: >-
+              Deux dossiers : Adulte et Enfant & Ado. Ouvre celui que tu veux
+              mettre à jour, puis remplace le PDF concerné.
+            fields:
+              # ─── Contexte, non modifiable ───
+              - name: title
+                label: Titre du dossier
+                widget: string
+                readonly: true
+              - name: audience
+                label: Public concerné
+                widget: string
+                readonly: true
+              - name: intro
+                label: Phrase d'introduction
+                widget: text
+                readonly: true
+
+              - name: docs
+                label: Documents
+                label_singular: Document
+                widget: list
+                allow_add: false
+                allow_remove: false
+                allow_reorder: false
+                allow_duplicate: false
+                summary: "{{fields.name}}"
+                collapsed: true
+                fields:
+                  # ─── Le champ à mettre à jour chaque saison ───
+                  - name: file
+                    label: Fichier PDF
+                    widget: file
+                    required: true
+                    accept: application/pdf,.pdf
+                    media_folder: /public/docs
+                    public_folder: /docs
+                    hint: >-
+                      Envoie le PDF de la nouvelle saison. Donne-lui un nom
+                      clair qui contient l'année, par exemple
+                      fiche-inscription-adulte-2026-2027.pdf. Uniquement des
+                      PDF : un fichier Word ne s'ouvrirait pas chez tout le
+                      monde.
+
+                  # ─── Le badge "À vérifier" sur le site ───
+                  - name: outdated
+                    label: Document d'une saison passée
+                    widget: boolean
+                    required: false
+                    default: false
+                    hint: >-
+                      Coche cette case si le PDF date encore de l'an dernier.
+                      Un badge orange "À vérifier" s'affichera sur le site pour
+                      prévenir les familles. Décoche-la dès que tu as mis le
+                      document à jour.
+
+                  # ─── Contexte, non modifiable ───
+                  - name: name
+                    label: Nom du document
+                    widget: string
+                    readonly: true
+                  - name: purpose
+                    label: À quoi ça sert
+                    widget: text
+                    readonly: true
+                  - name: hint
+                    label: Conseil de remplissage
+                    widget: text
+                    readonly: true
+                    required: false

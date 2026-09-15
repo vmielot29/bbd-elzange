@@ -5,13 +5,29 @@
  *
  * C'est LE fichier à modifier pour changer :
  *   • le planning des cours          → PLANNING
- *   • l'équipe et leurs rôles         → COACHS
  *   • les valeurs / piliers du club   → PHILOSOPHY
- *   • les documents d'inscription     → REGISTRATION
- *   • la galerie photos               → GALLERY
  *   • les infos du club (adresse…)   → CLUB_INFO
  *   • les vidéos YouTube (opt.)       → VIDEOS
  *   • la saison en cours              → CURRENT_SEASON
+ *
+ * ─── Contenus pilotés par le CMS — ne PAS éditer ici ────────────────────────
+ * Trois contenus ne sont plus écrits en dur dans ce fichier : ils sont lus
+ * depuis des fichiers JSON du dossier `content/`, que le président du club
+ * modifie lui-même depuis l'interface web `/admin` (Sveltia CMS).
+ *
+ *   • la galerie photos               → GALLERY      ← content/gallery.json
+ *   • l'équipe et leurs photos        → COACHS       ← content/coachs.json
+ *   • les documents d'inscription     → REGISTRATION ← content/registration.json
+ *
+ * Les constantes gardent exactement les mêmes noms et les mêmes types qu'avant :
+ * aucun composant n'a eu besoin d'être modifié, seule la SOURCE a changé.
+ *
+ * Éditer ces JSON à la main reste possible (c'est du texte versionné dans Git),
+ * mais leurs clés doivent rester synchronisées avec les champs déclarés dans
+ * `public/admin/config.yml` : le CMS n'écrit que les champs qu'il connaît, donc
+ * une clé ajoutée ici sans être déclarée là-bas serait perdue au prochain
+ * enregistrement du président. Voir README-CMS.md.
+ * ────────────────────────────────────────────────────────────────────────────
  *
  * Toutes les valeurs marquées TODO (nom, adresse, email, etc.) doivent être
  * remplacées avant mise en production.
@@ -20,6 +36,13 @@
  * est lu par planning.ts, GALLERY par gallery.ts). Pas besoin de toucher au
  * code des composants pour changer un contenu — tout se fait ici.
  */
+
+// Données éditées via l'interface CMS (/admin) et versionnées dans le repo.
+// Ces imports sont résolus au BUILD : les valeurs sont figées dans le HTML
+// prerendu — aucune requête réseau côté visiteur, aucun impact sur le SEO.
+import galleryData from '../../../content/gallery.json';
+import coachsData from '../../../content/coachs.json';
+import registrationData from '../../../content/registration.json';
 
 /** Un créneau de cours dans le planning hebdomadaire. */
 export interface ClassSlot {
@@ -124,55 +147,16 @@ export const PLANNING: ClassSlot[] = [
  * Ordre d'affichage : président en premier, puis dans l'ordre des groupes
  * d'entraînement (petits → moyens → adultes → compétiteurs).
  *
- * Photos : à déposer dans `public/img/coachs/coach-X.jpg`. Tant que le fichier
- * n'existe pas, le composant affiche les initiales sur fond gradient.
+ * Photos : uploadées par le président depuis /admin → « Photos des coachs ».
+ * Elles atterrissent dans `public/img/coachs/`. Tant qu'une photo est vide,
+ * le composant affiche les initiales sur fond dégradé (comportement voulu).
  * TODO photos manquantes : Mounime, Amal, Yves.
+ *
+ * Seul le champ `photo` est modifiable via le CMS. Pour changer un nom, un
+ * rôle ou l'ordre d'affichage, éditer `content/coachs.json` à la main (et
+ * `public/admin/config.yml` si la structure change).
  */
-export const COACHS: Coach[] = [
-  {
-    name: 'Mounime Addaou',
-    role: 'Coach adultes',
-    bureauRole: 'Président du club',
-    initials: 'MA',
-    isPresident: true,
-    // TODO: ajouter la photo → /img/coachs/coach-mounime.jpg
-  },
-  {
-    name: 'Céline Livet',
-    role: 'Coach des petits (7 – 10 ans)',
-    bureauRole: 'Subventions & événementiel',
-    initials: 'CL',
-    photo: '/img/coachs/coach-5.jpg',
-  },
-  {
-    name: 'Amal Addaou',
-    role: 'Coach des petits (7 – 10 ans)',
-    bureauRole: 'Trésorière & communication',
-    initials: 'AA',
-    // TODO: ajouter la photo → /img/coachs/coach-amal.jpg
-  },
-  {
-    name: 'Mickaël Chaffangeon',
-    role: 'Coach du groupe des moyens (10 – 15 ans)',
-    bureauRole: 'Sécurité & grades',
-    initials: 'MC',
-    photo: '/img/coachs/coach-3.jpg',
-  },
-  {
-    name: 'Yves Kurz',
-    role: 'Coach des adultes (+ 16 ans)',
-    bureauRole: 'Secrétaire, matériel & environnement',
-    initials: 'YK',
-    // TODO: ajouter la photo → /img/coachs/coach-yves.jpg
-  },
-  {
-    name: 'Grégory Hénaut',
-    role: 'Coach des compétiteurs',
-    bureauRole: 'Chargé des compétitions & évaluation',
-    initials: 'GH',
-    photo: '/img/coachs/coach-4.jpg',
-  },
-];
+export const COACHS: Coach[] = coachsData.coachs;
 
 export const PHILOSOPHY = {
   pillars: [
@@ -222,76 +206,18 @@ export interface RegistrationProfile {
   docs: RegistrationDoc[];
 }
 
-export const REGISTRATION: RegistrationProfile[] = [
-  {
-    title: 'Adulte',
-    audience: '16 ans et plus',
-    intro: 'Dossier à ramener complet le premier jour, ou dans le mois qui suit ta première séance.',
-    docs: [
-      {
-        name: 'Fiche d\'inscription',
-        file: '/docs/fiche-inscription-adulte-2025-2026.pdf',
-        purpose: 'Tes coordonnées personnelles et le choix du cours.',
-        hint: 'À imprimer, remplir à la main et signer. Ou remplir directement dans un lecteur PDF si tu préfères.',
-      },
-      {
-        name: 'Questionnaire de santé + attestation',
-        file: '/docs/qs-majeur-attestation.pdf',
-        purpose: '10 questions rapides sur ta santé. Si tu réponds NON à toutes, l\'attestation suffit.',
-        hint: 'Si tu réponds OUI à au moins une question, il faudra un certificat médical (voir plus bas).',
-      },
-      {
-        name: 'Certificat médical – pratique loisir',
-        file: '/docs/certificat-medical-light-loisir.pdf',
-        purpose: 'À faire remplir par ton médecin. Pour la pratique loisir sans compétition.',
-        hint: 'À apporter chez ton médecin traitant. Valable 3 ans si le questionnaire de santé reste OK.',
-      },
-      {
-        name: 'Certificat médical – combat / compétition',
-        file: '/docs/certificat-medical-combat.pdf',
-        purpose: 'Uniquement si tu veux faire de la compétition (galas, tournois).',
-        hint: 'À faire remplir par ton médecin. Obligatoire chaque année pour les compétiteurs.',
-      },
-    ],
-  },
-  {
-    title: 'Enfant & Ado',
-    audience: '7 – 15 ans',
-    intro: 'Documents à remplir par un parent. Autorisation parentale et autorisation de soins obligatoires.',
-    docs: [
-      {
-        name: 'Fiche d\'inscription enfant',
-        file: '/docs/fiche-inscription-enfant-2025-2026.pdf',
-        purpose: 'Coordonnées du (des) parent(s) et de l\'enfant, choix du cours.',
-        hint: 'À imprimer, remplir à la main par un parent et signer.',
-      },
-      {
-        name: 'Questionnaire de santé + autorisation parentale',
-        file: '/docs/qs-mineur-autorisation-parentale.pdf',
-        purpose: '10 questions santé (à remplir par le parent) et l\'accord pour la pratique de la boxe.',
-        hint: 'Si vous répondez OUI à une question, un certificat médical sera nécessaire.',
-      },
-      {
-        name: 'Autorisation de soins (mineur)',
-        file: '/docs/autorisation-soins-mineur-2026-2027.pdf',
-        purpose: 'Permet aux coachs de faire soigner ton enfant en cas de bobo pendant un cours.',
-        hint: 'À remplir et signer par un parent. Personnes à prévenir en cas d\'urgence.',
-      },
-      {
-        name: 'Certificat médical – pratique loisir',
-        file: '/docs/certificat-medical-light-loisir.pdf',
-        purpose: 'À faire remplir par le médecin de l\'enfant, pour la pratique loisir.',
-        hint: 'Valable 3 ans si le questionnaire de santé reste OK.',
-      },
-      {
-        name: 'Certificat médical – combat / compétition',
-        file: '/docs/certificat-medical-combat.pdf',
-        purpose: 'Uniquement si ton enfant fait de la compétition.',
-        hint: 'Obligatoire chaque année pour les compétiteurs.',
-      },
-    ],
-  },
-];
+/**
+ * Documents d'inscription, par profil (Adulte / Enfant & Ado).
+ *
+ * Les PDF sont remplacés par le président depuis /admin → « Fiches
+ * d'inscription ». Les fichiers atterrissent dans `public/docs/` et sont
+ * servis sur `/docs/…`.
+ *
+ * Via le CMS, seuls le PDF (`file`) et le badge « À vérifier » (`outdated`)
+ * sont modifiables. Les intitulés et explications sont en lecture seule :
+ * ce sont des textes rédigés, à changer dans `content/registration.json`.
+ */
+export const REGISTRATION: RegistrationProfile[] = registrationData.profiles;
 
 /**
  * Vidéos YouTube — combats, sparring, entraînements techniques.
@@ -310,19 +236,15 @@ export const VIDEOS: VideoEmbed[] = [
 ];
 
 /**
- * Galerie photos — facile à mettre à jour.
+ * Galerie photos — entièrement pilotée depuis /admin → « Galerie photos ».
  *
- * Pour ajouter une image :
- *   1. Dépose le fichier dans `public/img/gallery/` (ou `public/img/`)
- *   2. Ajoute une entrée ci-dessous avec un `alt` descriptif (important pour le SEO !)
+ * Le président peut ajouter, supprimer, réordonner (glisser-déposer) et
+ * légender les images. Les fichiers atterrissent dans `public/img/` et sont
+ * servis sur `/img/…`. L'ordre du tableau = l'ordre du diaporama.
  *
- * Au prochain `npm run build`, l'image apparaît automatiquement.
+ * Le champ `full` (grand format distinct pour la lightbox) n'est pas exposé
+ * dans le CMS : aucune photo ne l'utilise aujourd'hui, et la lightbox retombe
+ * automatiquement sur `src`. Pour l'activer, l'ajouter aux deux endroits —
+ * ici ET dans `public/admin/config.yml`.
  */
-export const GALLERY: GalleryImage[] = [
-  { src: '/img/groupe-terville.jpg', alt: 'Groupe du club au gala de Terville' },
-  { src: '/img/gala-terville.jpg',   alt: 'Combattant du BBD Elzange en gala à Terville' },
-  { src: '/img/ceinture-wkn.jpg',    alt: 'Ceinture WKN remportée par un combattant du club' },
-  { src: '/img/photo-club-1.jpg',    alt: 'Entraînement au club BBD Elzange' },
-  { src: '/img/photo-club-2.jpg',    alt: 'Séance collective à la salle des sports d\'Elzange' },
-  // TODO : ajoute autant de photos que tu veux, simplement en complétant cette liste.
-];
+export const GALLERY: GalleryImage[] = galleryData.images;

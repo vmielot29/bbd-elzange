@@ -1,0 +1,52 @@
+{
+  "coachs": [
+    {
+      "name": "Mounime Addaou",
+      "role": "Coach adultes",
+      "bureauRole": "Président du club",
+      "initials": "MA",
+      "photo": "",
+      "isPresident": true
+    },
+    {
+      "name": "Céline Livet",
+      "role": "Coach des petits (7 – 10 ans)",
+      "bureauRole": "Subventions & événementiel",
+      "initials": "CL",
+      "photo": "/img/coachs/coach-5.jpg",
+      "isPresident": false
+    },
+    {
+      "name": "Amal Addaou",
+      "role": "Coach des petits (7 – 10 ans)",
+      "bureauRole": "Trésorière & communication",
+      "initials": "AA",
+      "photo": "",
+      "isPresident": false
+    },
+    {
+      "name": "Mickaël Chaffangeon",
+      "role": "Coach du groupe des moyens (10 – 15 ans)",
+      "bureauRole": "Sécurité & grades",
+      "initials": "MC",
+      "photo": "/img/coachs/coach-3.jpg",
+      "isPresident": false
+    },
+    {
+      "name": "Yves Kurz",
+      "role": "Coach des adultes (+ 16 ans)",
+      "bureauRole": "Secrétaire, matériel & environnement",
+      "initials": "YK",
+      "photo": "",
+      "isPresident": false
+    },
+    {
+      "name": "Grégory Hénaut",
+      "role": "Coach des compétiteurs",
+      "bureauRole": "Chargé des compétitions & évaluation",
+      "initials": "GH",
+      "photo": "/img/coachs/coach-4.jpg",
+      "isPresident": false
+    }
+  ]
+}

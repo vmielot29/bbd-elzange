@@ -1,0 +1,24 @@
+{
+  "images": [
+    {
+      "src": "/img/groupe-terville.jpg",
+      "alt": "Groupe du club au gala de Terville"
+    },
+    {
+      "src": "/img/gala-terville.jpg",
+      "alt": "Combattant du BBD Elzange en gala à Terville"
+    },
+    {
+      "src": "/img/ceinture-wkn.jpg",
+      "alt": "Ceinture WKN remportée par un combattant du club"
+    },
+    {
+      "src": "/img/photo-club-1.jpg",
+      "alt": "Entraînement au club BBD Elzange"
+    },
+    {
+      "src": "/img/photo-club-2.jpg",
+      "alt": "Séance collective à la salle des sports d'Elzange"
+    }
+  ]
+}
