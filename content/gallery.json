@@ -1,16 +1,16 @@
 {
   "images": [
     {
-      "src": "/img/groupe-terville.jpg",
-      "alt": "Groupe du club au gala de Terville"
-    },
-    {
       "src": "/img/gala-terville.jpg",
       "alt": "Combattant du BBD Elzange en gala à Terville"
     },
     {
+      "src": "/img/groupe-terville.jpg",
+      "alt": "Groupe du club au gala de Terville"
+    },
+    {
       "src": "/img/ceinture-wkn.jpg",
-      "alt": "Ceinture WKN remportée par un combattant du club"
+      "alt": "Ceinture WKN"
     },
     {
       "src": "/img/photo-club-1.jpg",
