@@ -3,34 +3,34 @@
     {
       "title": "Adulte",
       "audience": "16 ans et plus",
-      "intro": "Dossier à ramener complet le premier jour, ou dans le mois qui suit ta première séance.",
+      "intro": "Le dossier d'inscription complet doit être remis lors de votre première séance ou, au plus tard, dans le mois suivant votre reprise.",
       "docs": [
         {
           "name": "Fiche d'inscription",
           "file": "/docs/fiche-inscription-adulte-2025-2026.pdf",
-          "purpose": "Tes coordonnées personnelles et le choix du cours.",
-          "hint": "À imprimer, remplir à la main et signer. Ou remplir directement dans un lecteur PDF si tu préfères.",
+          "purpose": "Renseignez vos coordonnées personnelles ainsi que la formule choisie.",
+          "hint": "Ce document est à télécharger, à compléter (de manière manuscrite ou directement via un éditeur PDF) et à signer.",
           "outdated": false
         },
         {
           "name": "Questionnaire de santé + attestation",
           "file": "/docs/qs-majeur-attestation.pdf",
-          "purpose": "10 questions rapides sur ta santé. Si tu réponds NON à toutes, l'attestation suffit.",
-          "hint": "Si tu réponds OUI à au moins une question, il faudra un certificat médical (voir plus bas).",
+          "purpose": "Un questionnaire simple pour faire le point sur votre état de santé. Si vous répondez « NON » à l'ensemble des questions, l'attestation renseignée suffit.",
+          "hint": "En cas de réponse « OUI » à au moins une question, la fourniture d'un certificat médical devient obligatoire.",
           "outdated": false
         },
         {
           "name": "Certificat médical – pratique loisir",
           "file": "/docs/certificat-medical-light-loisir.pdf",
-          "purpose": "À faire remplir par ton médecin. Pour la pratique loisir sans compétition.",
-          "hint": "À apporter chez ton médecin traitant. Valable 3 ans si le questionnaire de santé reste OK.",
+          "purpose": "Document à faire compléter par votre médecin traitant pour une pratique en loisir (sans compétition).",
+          "hint": "Valable 3 ans, sous réserve de valider chaque année le questionnaire de santé.",
           "outdated": false
         },
         {
           "name": "Certificat médical – combat / compétition",
           "file": "/docs/certificat-medical-combat.pdf",
-          "purpose": "Uniquement si tu veux faire de la compétition (galas, tournois).",
-          "hint": "À faire remplir par ton médecin. Obligatoire chaque année pour les compétiteurs.",
+          "purpose": "Obligatoire pour l'engagement en compétition (galas, championnats, tournois).",
+          "hint": "Ce document doit être renouvelé et complété par votre médecin à chaque début de saison.",
           "outdated": false
         }
       ]
@@ -38,41 +38,41 @@
     {
       "title": "Enfant & Ado",
       "audience": "7 – 15 ans",
-      "intro": "Documents à remplir par un parent. Autorisation parentale et autorisation de soins obligatoires.",
+      "intro": "Documents à compléter obligatoirement par le représentant légal. L'autorisation parentale et l'autorisation de soins sont requises pour valider l'inscription.",
       "docs": [
         {
           "name": "Fiche d'inscription enfant",
           "file": "/docs/fiche-inscription-enfant-2025-2026.pdf",
-          "purpose": "Coordonnées du (des) parent(s) et de l'enfant, choix du cours.",
-          "hint": "À imprimer, remplir à la main par un parent et signer.",
+          "purpose": "Informations relatives à l'enfant et aux représentants légaux, accompagnées du choix de la formule",
+          "hint": "Ce document est à télécharger, à compléter (de manière manuscrite ou directement via un éditeur PDF) et à signer.",
           "outdated": false
         },
         {
           "name": "Questionnaire de santé + autorisation parentale",
           "file": "/docs/qs-mineur-autorisation-parentale.pdf",
-          "purpose": "10 questions santé (à remplir par le parent) et l'accord pour la pratique de la boxe.",
-          "hint": "Si vous répondez OUI à une question, un certificat médical sera nécessaire.",
+          "purpose": "Questionnaire de santé destiné aux mineurs (à renseigner par le représentant légal) et accord formel pour la pratique du kickboxing.",
+          "hint": "En cas de réponse affirmative à au moins une question, la présentation d'un certificat médical est requise.",
           "outdated": false
         },
         {
           "name": "Autorisation de soins (mineur)",
           "file": "/docs/autorisation-soins-mineur-2026-2027.pdf",
-          "purpose": "Permet aux coachs de faire soigner ton enfant en cas de bobo pendant un cours.",
-          "hint": "À remplir et signer par un parent. Personnes à prévenir en cas d'urgence.",
+          "purpose": "Autorise l'encadrement à prendre les mesures médicales nécessaires ou à faire prodiguer les soins adaptés en cas de blessure durant une séance.",
+          "hint": "À compléter et signer en indiquant les coordonnées des personnes à prévenir en cas d'urgence.",
           "outdated": false
         },
         {
           "name": "Certificat médical – pratique loisir",
           "file": "/docs/certificat-medical-light-loisir.pdf",
-          "purpose": "À faire remplir par le médecin de l'enfant, pour la pratique loisir.",
-          "hint": "Valable 3 ans si le questionnaire de santé reste OK.",
+          "purpose": "À faire compléter par le médecin traitant de l'enfant pour une pratique en loisir.",
+          "hint": "Valable 3 ans, sous réserve d'un questionnaire de santé annuel conforme.",
           "outdated": false
         },
         {
           "name": "Certificat médical – combat / compétition",
           "file": "/docs/certificat-medical-combat.pdf",
-          "purpose": "Uniquement si ton enfant fait de la compétition.",
-          "hint": "Obligatoire chaque année pour les compétiteurs.",
+          "purpose": "Requis uniquement si l'enfant s'engage en compétition (assauts, championnats, tournois).",
+          "hint": "Ce document doit être obligatoirement renouvelé chaque année.",
           "outdated": false
         }
       ]

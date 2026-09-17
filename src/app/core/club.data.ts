@@ -162,15 +162,15 @@ export const PHILOSOPHY = {
   pillars: [
     {
       title: 'Débutants bienvenus',
-      text: 'Aucun niveau requis. On te prend là où tu en es, on ajuste. La première séance sert souvent à comprendre le vocabulaire et à voir comment ça se passe.',
+      text: "Aucun niveau préalable n'est requis. Nos entraîneurs vous accompagnent dès vos débuts en adaptant les séances à votre rythme. La première séance est idéale pour appréhender les bases et découvrir le fonctionnement du club.",
     },
     {
       title: 'Progresser à plusieurs',
-      text: 'Les compétiteurs s\'entraînent avec les débutants et inversement. Chacun tire l\'autre vers le haut. C\'est comme ça qu\'on avance vite, sans se mettre en danger.',
+      text: " Compétiteurs et débutants s'entraînent ensemble dans un esprit d'entraide. Cette dynamique permet à chacun d'évoluer plus rapidement et en toute sécurité grâce au partage d'expérience.",
     },
     {
       title: 'Pas d\'ego',
-      text: 'Le compétiteur vaut le débutant, le débutant vaut le compétiteur. On serre la main avant et après chaque round. Ce qui compte, c\'est le respect du travail de l\'autre.',
+      text: "Chez nous, chaque pratiquant a la même valeur. Le respect mutuel et le salut avant et après chaque round sont fondamentaux. Notre priorité reste le travail d'équipe et la progression de chacun.",
     },
   ],
 };

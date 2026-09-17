@@ -76,20 +76,25 @@ bureau. Le développeur reste l'opérateur, le club reste propriétaire.
 Le président, lui, n'a besoin **que d'un compte GitHub** : il n'ouvrira jamais
 Cloudflare ni Vercel.
 
-**Le repo lui-même** est aujourd'hui sur un compte personnel
-(`vmielot29/bbd-elzange`). C'est le point le plus critique — bien plus que
-Cloudflare, dont le secret se régénère en deux minutes. Pour bien faire, créer
-une **organisation GitHub** gratuite et y transférer le repo. À faire de
-préférence *avant* l'étape 1 ; sinon il suffira de corriger la ligne `repo:`
-dans `config.yml`, l'OAuth App n'étant pas liée au propriétaire du dépôt.
+**Le repo lui-même** est sur un compte personnel (`vmielot29/bbd-elzange`), et
+il doit y rester : Vercel ne permet pas de connecter un projet du plan **Hobby
+(gratuit)** à un dépôt appartenant à une organisation GitHub. Le transférer
+vers une organisation imposerait de passer à **Vercel Pro (~20 $/mois)**.
+
+> « Vercel does not support connecting a project on your Hobby team to Git
+> repositories owned by Git organizations. »
+> — [Vercel, Limits](https://vercel.com/docs/limits)
+
+La continuité se gère donc autrement : **deux membres du bureau** doivent
+connaître l'existence du dépôt et disposer des accès notés dans le tableau
+ci-dessous.
 
 #### Démarrer sur un compte perso, c'est réversible
 
 Rien n'enferme : l'email d'un compte Cloudflare ou Vercel se change dans les
-réglages, une OAuth App GitHub se transfère à une organisation, et un repo se
-transfère avec redirections automatiques. Seul le transfert du repo demande un
-geste technique : corriger `repo:` dans `config.yml` et vérifier que Vercel
-pointe toujours dessus.
+réglages, et une OAuth App GitHub se transfère. Seule exception, le dépôt : il
+doit rester sur un compte GitHub personnel tant que l'hébergement est sur
+Vercel Hobby (voir ci-dessus).
 
 Le vrai risque n'est pas la migration, c'est l'oubli. D'où le tableau ci-dessous,
 **à remplir dès la mise en service** :
@@ -421,9 +426,38 @@ avec `resolveJsonModule`, sans dépendance ni étape de build.
 sans lui, Sveltia écrit du `yaml-frontmatter` par défaut — donc du YAML dans
 un fichier `.json`, et le build casse.
 
-### Changer de domaine
+### Changer de domaine — procédure
 
-Le CMS peut tourner sur l'URL Vercel avant que le nom de domaine soit branché.
+Le site tourne aujourd'hui sur `bbd-elzange.vercel.app`, mais **tout le code
+cible déjà `www.bbd-elzange.fr`** (canonical, Open Graph, JSON-LD, sitemap,
+robots.txt, `contact.ts`). La bascule est donc courte.
+
+**1. Brancher le domaine sur Vercel**
+Settings → Domains → ajouter `bbd-elzange.fr` *et* `www.bbd-elzange.fr`, créer
+les enregistrements DNS indiqués, laisser Vercel générer le certificat. Choisir
+`www.` comme version canonique, c'est ce que le code référence.
+
+**2. Mettre à jour `ALLOWED_DOMAINS`** *(le seul réglage bloquant)*
+
+```bash
+npx.cmd wrangler secret put ALLOWED_DOMAINS --name sveltia-cms-auth
+```
+
+Valeur : `www.bbd-elzange.fr, bbd-elzange.fr, bbd-elzange.vercel.app`
+
+Le worker découpe sur les virgules et ignore les espaces. Effet immédiat, sans
+redéploiement. Garder l'URL Vercel dans la liste pendant la propagation DNS,
+pour ne pas se retrouver enfermé dehors.
+
+**3. Modifier `site_url` et `display_url`** dans `public/admin/config.yml`,
+puis pousser. Aucun autre fichier n'est concerné.
+
+> Tant que le domaine n'est pas branché, les aperçus de liens (Facebook,
+> WhatsApp, SMS) n'affichent pas de vignette : `og:image` pointe vers un
+> domaine qui ne résout pas encore. Cela se corrige tout seul à la bascule.
+
+#### Récapitulatif de ce qui bouge
+
 Un seul réglage est réellement bloquant lors de la bascule :
 
 | Réglage | Lié au domaine ? | À faire au changement |
